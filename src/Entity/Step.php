@@ -21,6 +21,10 @@ class Step
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
+    #[ORM\ManyToOne(inversedBy: 'steps')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Recipe $recipe = null;
+
     public function getContent(): ?string
     {
         return $this->content;
@@ -29,6 +33,18 @@ class Step
     public function setContent(string $content): static
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getRecipe(): ?Recipe
+    {
+        return $this->recipe;
+    }
+
+    public function setRecipe(?Recipe $recipe): static
+    {
+        $this->recipe = $recipe;
 
         return $this;
     }
