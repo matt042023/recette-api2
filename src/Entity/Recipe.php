@@ -3,28 +3,27 @@
 namespace App\Entity;
 
 use App\Repository\RecipeRepository;
+use App\Entity\Traits\HasDescriptionTrait;
+use App\Entity\Traits\HasIdTrait;
+use App\Entity\Traits\HasNameTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 class Recipe
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    use HasIdTrait;
 
-    #[ORM\Column(length: 128)]
-    private ?string $name = null;
+    use HasNameTrait;
 
-    #[ORM\Column(length: 128)]
-    private ?string $slug = null;
+    use HasDescriptionTrait;
+
+    use TimestampableEntity;
 
     #[ORM\Column]
     private ?bool $draft = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $description = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $cooking = null;
@@ -35,41 +34,6 @@ class Recipe
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $preparation = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updatedAt = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): static
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
     public function isDraft(): ?bool
     {
         return $this->draft;
@@ -78,18 +42,6 @@ class Recipe
     public function setDraft(bool $draft): static
     {
         $this->draft = $draft;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): static
-    {
-        $this->description = $description;
 
         return $this;
     }
@@ -126,30 +78,6 @@ class Recipe
     public function setPreparation(?int $preparation): static
     {
         $this->preparation = $preparation;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }
