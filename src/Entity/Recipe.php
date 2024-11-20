@@ -60,12 +60,19 @@ class Recipe
     #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'recipe')]
     private Collection $tags;
 
+    /**
+     * @var Collection<int, RecipeHasIngredient>
+     */
+    #[ORM\OneToMany(targetEntity: RecipeHasIngredient::class, mappedBy: 'recipe', orphanRemoval: true)]
+    private Collection $recipeHasIngredients;
+
     public function __construct()
     {
         $this->steps = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->sources = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->recipeHasIngredients = new ArrayCollection();
     }
 
     public function isDraft(): ?bool
@@ -225,6 +232,36 @@ class Recipe
     {
         if ($this->tags->removeElement($tag)) {
             $tag->removeRecipe($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RecipeHasIngredient>
+     */
+    public function getRecipeHasIngredients(): Collection
+    {
+        return $this->recipeHasIngredients;
+    }
+
+    public function addRecipeHasIngredient(RecipeHasIngredient $recipeHasIngredient): static
+    {
+        if (!$this->recipeHasIngredients->contains($recipeHasIngredient)) {
+            $this->recipeHasIngredients->add($recipeHasIngredient);
+            $recipeHasIngredient->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipeHasIngredient(RecipeHasIngredient $recipeHasIngredient): static
+    {
+        if ($this->recipeHasIngredients->removeElement($recipeHasIngredient)) {
+            // set the owning side to null (unless already changed)
+            if ($recipeHasIngredient->getRecipe() === $this) {
+                $recipeHasIngredient->setRecipe(null);
+            }
         }
 
         return $this;
