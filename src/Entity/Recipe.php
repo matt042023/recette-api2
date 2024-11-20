@@ -48,10 +48,17 @@ class Recipe
     #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'recipe')]
     private Collection $images;
 
+    /**
+     * @var Collection<int, Source>
+     */
+    #[ORM\ManyToMany(targetEntity: Source::class, mappedBy: 'recipe')]
+    private Collection $sources;
+
     public function __construct()
     {
         $this->steps = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->sources = new ArrayCollection();
     }
 
     public function isDraft(): ?bool
@@ -157,6 +164,33 @@ class Recipe
             if ($image->getRecipe() === $this) {
                 $image->setRecipe(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Source>
+     */
+    public function getSources(): Collection
+    {
+        return $this->sources;
+    }
+
+    public function addSource(Source $source): static
+    {
+        if (!$this->sources->contains($source)) {
+            $this->sources->add($source);
+            $source->addRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSource(Source $source): static
+    {
+        if ($this->sources->removeElement($source)) {
+            $source->removeRecipe($this);
         }
 
         return $this;
