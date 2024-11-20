@@ -15,45 +15,48 @@ endif
 CONSOLE=php bin/console
 
 
-
-
 check:
 	$(EXEC) composer check
-
 
 csfix:
 	$(EXEC) composer fix
 
 
-start:
+docker.up:
 	docker-compose up
 
-
-start.demon:
+docker.up.demon:
 	docker-compose up -d
 
-
-stop:
+docker.down:
 	docker-compose down
 
+docker.start:
+	docker-compose start
 
-restart: stop start.demon
+docker.start.demon:
+	docker-compose start.demon
+
+docker.stop:
+	docker-compose stop
+
+docker.restart: stop start.demon
 
 
 update:
 	$(EXEC) composer install
 
-
 upgrade:
 	$(EXEC) composer update
 
-
 entity:
 	$(EXEC) $(CONSOLE) make:entity
-
 
 migration:
 	$(EXEC) $(CONSOLE) make:migration
 
 migrate:
 	$(EXEC) $(CONSOLE) doctrine:migration:migrate
+
+migration.list:
+	$(EXEC) $(CONSOLE) doctrine:migration:list

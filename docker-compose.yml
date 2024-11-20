@@ -28,6 +28,8 @@ services:
       MARIADB_DATABASE: api
     ports:
       - "3307:3306" # Port hôte 3307 pour accéder à la base MariaDB sur le port 3306 du conteneur
+    volumes:
+      - db_data:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -43,3 +45,6 @@ services:
     ports:
       - "8082:8025" # Port hôte 8082 pour accéder à l'interface Mailhog sur le port 8025 du conteneur
       - "1026:1025" # Port hôte 1026 pour SMTP de Mailhog sur le port 1025 du conteneur
+
+volumes:
+  db_data:
