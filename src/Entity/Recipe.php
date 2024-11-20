@@ -54,11 +54,18 @@ class Recipe
     #[ORM\ManyToMany(targetEntity: Source::class, mappedBy: 'recipe')]
     private Collection $sources;
 
+    /**
+     * @var Collection<int, Tag>
+     */
+    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'recipe')]
+    private Collection $tags;
+
     public function __construct()
     {
         $this->steps = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->sources = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function isDraft(): ?bool
@@ -191,6 +198,33 @@ class Recipe
     {
         if ($this->sources->removeElement($source)) {
             $source->removeRecipe($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tag>
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): static
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+            $tag->addRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): static
+    {
+        if ($this->tags->removeElement($tag)) {
+            $tag->removeRecipe($this);
         }
 
         return $this;
