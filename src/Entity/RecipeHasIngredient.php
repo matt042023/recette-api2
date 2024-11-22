@@ -8,7 +8,6 @@ use App\Repository\RecipeHasIngredientRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-
 #[ORM\Entity(repositoryClass: RecipeHasIngredientRepository::class)]
 #[ApiResource]
 class RecipeHasIngredient
@@ -16,31 +15,33 @@ class RecipeHasIngredient
     use HasIdTrait;
 
     #[ORM\Column]
-    #[groups(['Recipe:item:get'])]
-    private ?float $quantity = null;
+    #[Groups(['Recipe:item:get'])]
+    private float $quantity;
 
     #[ORM\Column]
-    #[groups(['Recipe:item:get'])]
-    private ?bool $isOptional = null;
+    #[Groups(['Recipe:item:get'])]
+    private bool $isOptional;
 
     #[ORM\ManyToOne(inversedBy: 'recipeHasIngredients')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Recipe $recipe = null;
+    private Recipe $recipe;
 
     #[ORM\ManyToOne(inversedBy: 'recipeHasIngredients')]
     #[ORM\JoinColumn(nullable: false)]
-    #[groups(['Recipe:item:get'])]
-    private ?Ingredient $ingredient = null;
+    #[Groups(['Recipe:item:get'])]
+    private Ingredient $ingredient;
 
     #[ORM\ManyToOne(inversedBy: 'recipeHasIngredients')]
-    #[groups(['Recipe:item:get'])]
-    private ?IngredientGroup $ingredientGroup = null;
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['Recipe:item:get'])]
+    private IngredientGroup $ingredientGroup;
 
     #[ORM\ManyToOne(inversedBy: 'recipeHasIngredients')]
-    #[groups(['Recipe:item:get'])]
-    private ?Unit $unit = null;
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['Recipe:item:get'])]
+    private Unit $unit;
 
-    public function getQuantity(): ?float
+    public function getQuantity(): float
     {
         return $this->quantity;
     }
@@ -52,7 +53,7 @@ class RecipeHasIngredient
         return $this;
     }
 
-    public function isOptional(): ?bool
+    public function isOptional(): bool
     {
         return $this->isOptional;
     }
@@ -64,7 +65,7 @@ class RecipeHasIngredient
         return $this;
     }
 
-    public function getRecipe(): ?Recipe
+    public function getRecipe(): Recipe
     {
         return $this->recipe;
     }
@@ -76,7 +77,7 @@ class RecipeHasIngredient
         return $this;
     }
 
-    public function getIngredient(): ?Ingredient
+    public function getIngredient(): Ingredient
     {
         return $this->ingredient;
     }
@@ -88,7 +89,7 @@ class RecipeHasIngredient
         return $this;
     }
 
-    public function getIngredientGroup(): ?IngredientGroup
+    public function getIngredientGroup(): IngredientGroup
     {
         return $this->ingredientGroup;
     }
@@ -100,7 +101,7 @@ class RecipeHasIngredient
         return $this;
     }
 
-    public function getUnit(): ?Unit
+    public function getUnit(): Unit
     {
         return $this->unit;
     }

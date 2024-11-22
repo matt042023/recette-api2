@@ -13,7 +13,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 #[ApiResource]
 class Tag
@@ -23,23 +22,23 @@ class Tag
     use HasNameTrait;
 
     use HasDescriptionTrait;
-    
+
     use HasPriorityTrait;
 
     #[ORM\Column]
-    #[groups(['Recipe:item:get'])]
-    private ?bool $menu = null;
+    #[Groups(['Recipe:item:get'])]
+    private bool $menu;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
-    #[ORM\JoinColumn(onDelete: 'SET NULL')]
-    #[groups(['Recipe:item:get'])]
+    #[ORM\JoinColumn(onDelete: 'SET NULL', nullable: true)]
+    #[Groups(['Recipe:item:get'])]
     private ?self $parent = null;
 
     /**
      * @var Collection<int, self>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
-    #[groups(['Recipe:item:get'])]
+    #[Groups(['Recipe:item:get'])]
     private Collection $children;
 
     /**
@@ -54,7 +53,7 @@ class Tag
         $this->recipe = new ArrayCollection();
     }
 
-    public function isMenu(): ?bool
+    public function isMenu(): bool
     {
         return $this->menu;
     }

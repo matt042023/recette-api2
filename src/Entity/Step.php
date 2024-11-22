@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use Symfony\Component\Serializer\Annotation\Groups;
 use App\Entity\Traits\HasIdTrait;
 use App\Entity\Traits\HasPriorityTrait;
 use App\Repository\StepRepository;
@@ -12,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: StepRepository::class)]
 #[ApiResource()]
@@ -24,18 +24,18 @@ class Step
     use TimestampableEntity;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[groups(['Recipe:item:get'])]
-    private ?string $content = null;
+    #[Groups(['Recipe:item:get'])]
+    private string $content;
 
     #[ORM\ManyToOne(inversedBy: 'steps')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Recipe $recipe = null;
+    private Recipe $recipe;
 
     /**
      * @var Collection<int, Image>
      */
     #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'step')]
-    #[groups(['Recipe:item:get'])]
+    #[Groups(['Recipe:item:get'])]
     private Collection $images;
 
     public function __construct()
@@ -43,7 +43,7 @@ class Step
         $this->images = new ArrayCollection();
     }
 
-    public function getContent(): ?string
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -55,7 +55,7 @@ class Step
         return $this;
     }
 
-    public function getRecipe(): ?Recipe
+    public function getRecipe(): Recipe
     {
         return $this->recipe;
     }

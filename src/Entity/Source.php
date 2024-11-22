@@ -14,7 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-
 #[ORM\Entity(repositoryClass: SourceRepository::class)]
 #[ApiResource()]
 class Source
@@ -30,7 +29,7 @@ class Source
     use TimestampableEntity;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[groups(['Recipe:item:get'])]
+    #[Groups(['Recipe:item:get'])]
     private ?string $url = null;
 
     /**

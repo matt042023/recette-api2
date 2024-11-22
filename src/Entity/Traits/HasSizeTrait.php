@@ -5,19 +5,18 @@ namespace App\Entity\Traits;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-
-trait HasSizeTrait {
-
+trait HasSizeTrait
+{
     #[ORM\Column]
-    #[groups(['Recipe:item:get'])]
-    private ?float $size = null;
+    #[Groups(['Recipe:item:get'])]
+    private int $size;
 
-    public function getSize(): ?float
+    public function getSize(): int
     {
         return $this->size;
     }
 
-    public function setSize(float $size): static
+    public function setSize(int $size): static
     {
         $this->size = $size;
 
