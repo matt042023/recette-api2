@@ -4,10 +4,12 @@ namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 trait HasDescriptionTrait {
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[groups(['Recipe:item:get'])]
     private ?string $description = null;
 
     public function getDescription(): ?string

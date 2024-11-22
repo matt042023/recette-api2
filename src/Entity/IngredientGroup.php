@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Entity\Traits\HasIdTrait;
 use App\Entity\Traits\HasNameTrait;
 use App\Entity\Traits\HasPriorityTrait;
@@ -11,6 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: IngredientGroupRepository::class)]
+#[ApiResource()]
 class IngredientGroup
 {
     use HasIdTrait;

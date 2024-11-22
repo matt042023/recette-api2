@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Entity\Traits\HasDescriptionTrait;
 use App\Entity\Traits\HasIdTrait;
 use App\Entity\Traits\HasNameTrait;
@@ -11,8 +12,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: SourceRepository::class)]
+#[ApiResource()]
 class Source
 {
     use HasIdTrait;
@@ -26,6 +30,7 @@ class Source
     use TimestampableEntity;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[groups(['Recipe:item:get'])]
     private ?string $url = null;
 
     /**

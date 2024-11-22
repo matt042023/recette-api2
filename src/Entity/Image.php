@@ -2,6 +2,11 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Delete;
 use App\Entity\Traits\HasDescriptionTrait;
 use App\Entity\Traits\HasIdTrait;
 use App\Entity\Traits\HasNameTrait;
@@ -10,8 +15,18 @@ use App\Entity\Traits\HasSizeTrait;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Delete(),
+        new Post(),
+    ],
+)]
 class Image
 {
     use HasIdTrait;
@@ -27,6 +42,7 @@ class Image
     use HasSizeTrait;
 
     #[ORM\Column(length: 255)]
+    #[groups(['Recipe:item:get'])]
     private ?string $path = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]

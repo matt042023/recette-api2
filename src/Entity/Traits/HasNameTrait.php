@@ -4,10 +4,13 @@ namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 trait HasNameTrait {
 
   #[ORM\Column(length: 128)]
+  #[groups(['Recipe:item:get'])]
   private ?string $name = null;
 
   #[ORM\Column(length: 128, unique: true)]

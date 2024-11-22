@@ -1,7 +1,14 @@
 api_platform:
-    title: Hello API Platform
-    version: 1.0.0
-    defaults:
-        stateless: true
-        cache_headers:
-            vary: ['Content-Type', 'Authorization', 'Origin']
+  title: API Recette
+  version: 1.0.0
+  description: Api de recette de cuisine
+  show_webby: false
+  defaults:
+    stateless: false
+    cache_headers:
+      vary: ["Content-Type", "Authorization", "Origin"]
+  openapi:
+    contact:
+      name: Matthieu
+      url: https://github.com/matt042023/recette-api2/
+      email: matt.lheureux@hotmail.com
