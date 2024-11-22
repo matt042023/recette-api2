@@ -19,3 +19,8 @@ phpstan.neon
 ###< phpstan/phpstan ###
 
 .vscode/
+
+
+#Images
+App/public/images/*
+App/public/images/.gitignore
