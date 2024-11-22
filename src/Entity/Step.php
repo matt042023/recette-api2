@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use App\Entity\Traits\HasIdTrait;
 use App\Entity\Traits\HasPriorityTrait;
 use App\Repository\StepRepository;
@@ -12,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: StepRepository::class)]
+#[ApiResource()]
 class Step
 {
     use HasIdTrait;
@@ -21,6 +24,7 @@ class Step
     use TimestampableEntity;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[groups(['Recipe:item:get'])]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'steps')]
@@ -31,6 +35,7 @@ class Step
      * @var Collection<int, Image>
      */
     #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'step')]
+    #[groups(['Recipe:item:get'])]
     private Collection $images;
 
     public function __construct()

@@ -2,21 +2,27 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Entity\Traits\HasIdTrait;
 use App\Repository\UnitRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: UnitRepository::class)]
+#[ApiResource()]
 class Unit
 {
     use HasIdTrait;
 
     #[ORM\Column(length: 50)]
+    #[groups(['Recipe:item:get'])]
     private ?string $singular = null;
 
     #[ORM\Column(length: 50)]
+    #[groups(['Recipe:item:get'])]
     private ?string $plural = null;
 
     /**

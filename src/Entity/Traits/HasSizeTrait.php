@@ -3,11 +3,13 @@
 namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 trait HasSizeTrait {
 
     #[ORM\Column]
+    #[groups(['Recipe:item:get'])]
     private ?float $size = null;
 
     public function getSize(): ?float
