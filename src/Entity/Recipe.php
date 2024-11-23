@@ -3,21 +3,21 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Patch;
-use Symfony\Component\Serializer\Annotation\Groups;
-use App\Repository\RecipeRepository;
+use ApiPlatform\Metadata\Post;
 use App\Entity\Traits\HasDescriptionTrait;
 use App\Entity\Traits\HasIdTrait;
 use App\Entity\Traits\HasNameTrait;
+use App\Entity\Traits\HasTimeTrait;
+use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 #[ApiResource(
@@ -28,7 +28,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
         new GetCollection(),
         new Delete(),
         new Post(),
-        new Patch()
+        new Patch(),
     ],
 )]
 class Recipe
@@ -39,57 +39,57 @@ class Recipe
 
     use HasDescriptionTrait;
 
-    use TimestampableEntity;
+    use HasTimeTrait;
 
     #[ORM\Column]
-    #[groups(['Recipe:item:get'])]
-    private ?bool $draft = null;
+    #[Groups(['Recipe:item:get'])]
+    private bool $draft;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
-    #[groups(['Recipe:item:get'])]
+    #[Groups(['Recipe:item:get'])]
     private ?int $cooking = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
-    #[groups(['Recipe:item:get'])]
+    #[Groups(['Recipe:item:get'])]
     private ?int $break = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
-    #[groups(['Recipe:item:get'])]
+    #[Groups(['Recipe:item:get'])]
     private ?int $preparation = null;
 
     /**
      * @var Collection<int, Step>
      */
     #[ORM\OneToMany(targetEntity: Step::class, mappedBy: 'recipe', orphanRemoval: true)]
-    #[groups(['Recipe:item:get'])]
+    #[Groups(['Recipe:item:get'])]
     private Collection $steps;
 
     /**
      * @var Collection<int, Image>
      */
     #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'recipe')]
-    #[groups(['Recipe:item:get'])]
+    #[Groups(['Recipe:item:get'])]
     private Collection $images;
 
     /**
      * @var Collection<int, Source>
      */
     #[ORM\ManyToMany(targetEntity: Source::class, mappedBy: 'recipe')]
-    #[groups(['Recipe:item:get'])]
+    #[Groups(['Recipe:item:get'])]
     private Collection $sources;
 
     /**
      * @var Collection<int, Tag>
      */
     #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'recipe')]
-    #[groups(['Recipe:item:get'])]
+    #[Groups(['Recipe:item:get'])]
     private Collection $tags;
 
     /**
      * @var Collection<int, RecipeHasIngredient>
      */
     #[ORM\OneToMany(targetEntity: RecipeHasIngredient::class, mappedBy: 'recipe', orphanRemoval: true)]
-    #[groups(['Recipe:item:get'])]
+    #[Groups(['Recipe:item:get'])]
     private Collection $recipeHasIngredients;
 
     public function __construct()
@@ -101,7 +101,7 @@ class Recipe
         $this->recipeHasIngredients = new ArrayCollection();
     }
 
-    public function isDraft(): ?bool
+    public function isDraft(): bool
     {
         return $this->draft;
     }

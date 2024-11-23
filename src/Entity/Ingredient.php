@@ -6,13 +6,12 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Entity\Traits\HasDescriptionTrait;
 use App\Entity\Traits\HasIdTrait;
 use App\Entity\Traits\HasNameTrait;
+use App\Entity\Traits\HasTimeTrait;
 use App\Repository\IngredientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
-
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
 #[ApiResource]
@@ -24,19 +23,19 @@ class Ingredient
 
     use HasDescriptionTrait;
 
-    use TimestampableEntity;
+    use HasTimeTrait;
 
     #[ORM\Column]
-    #[groups(['Recipe:item:get'])]
-    private ?bool $vegan = null;
+    #[Groups(['Recipe:item:get'])]
+    private bool $vegan;
 
     #[ORM\Column]
-    #[groups(['Recipe:item:get'])]
-    private ?bool $dairyFree = null;
+    #[Groups(['Recipe:item:get'])]
+    private bool $dairyFree;
 
     #[ORM\Column]
-    #[groups(['Recipe:item:get'])]
-    private ?bool $glutenFree = null;
+    #[Groups(['Recipe:item:get'])]
+    private bool $glutenFree;
 
     /**
      * @var Collection<int, RecipeHasIngredient>
@@ -49,7 +48,7 @@ class Ingredient
         $this->recipeHasIngredients = new ArrayCollection();
     }
 
-    public function isVegan(): ?bool
+    public function isVegan(): bool
     {
         return $this->vegan;
     }
@@ -61,7 +60,7 @@ class Ingredient
         return $this;
     }
 
-    public function isDairyFree(): ?bool
+    public function isDairyFree(): bool
     {
         return $this->dairyFree;
     }
@@ -73,7 +72,7 @@ class Ingredient
         return $this;
     }
 
-    public function isGlutenFree(): ?bool
+    public function isGlutenFree(): bool
     {
         return $this->glutenFree;
     }

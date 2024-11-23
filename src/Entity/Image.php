@@ -3,20 +3,22 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Delete;
 use App\Entity\Traits\HasDescriptionTrait;
 use App\Entity\Traits\HasIdTrait;
 use App\Entity\Traits\HasNameTrait;
 use App\Entity\Traits\HasPriorityTrait;
 use App\Entity\Traits\HasSizeTrait;
+use App\Entity\Traits\HasTimeTrait;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 #[ApiResource(
@@ -37,21 +39,27 @@ class Image
 
     use HasPriorityTrait;
 
-    use TimestampableEntity;
+    use HasTimeTrait;
 
     use HasSizeTrait;
 
     #[ORM\Column(length: 255)]
-    #[groups(['Recipe:item:get'])]
-    private ?string $path = null;
+    #[Groups(['Recipe:item:get'])]
+    private string $path;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Step $step = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Recipe $recipe = null;
 
-    public function getPath(): ?string
+    // NOTE: This is not a mapped field of entity metadata, just a simple property.
+    #[Vich\UploadableField(mapping: 'images', fileNameProperty: 'path', size: 'size')]
+    private ?File $imageFile = null;
+
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -85,5 +93,21 @@ class Image
         $this->recipe = $recipe;
 
         return $this;
+    }
+
+    public function setImageFile(File|UploadedFile|null $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
     }
 }

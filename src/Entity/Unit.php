@@ -10,7 +10,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-
 #[ORM\Entity(repositoryClass: UnitRepository::class)]
 #[ApiResource()]
 class Unit
@@ -18,12 +17,12 @@ class Unit
     use HasIdTrait;
 
     #[ORM\Column(length: 50)]
-    #[groups(['Recipe:item:get'])]
-    private ?string $singular = null;
+    #[Groups(['Recipe:item:get'])]
+    private string $singular;
 
     #[ORM\Column(length: 50)]
-    #[groups(['Recipe:item:get'])]
-    private ?string $plural = null;
+    #[Groups(['Recipe:item:get'])]
+    private string $plural;
 
     /**
      * @var Collection<int, RecipeHasIngredient>
@@ -36,7 +35,7 @@ class Unit
         $this->recipeHasIngredients = new ArrayCollection();
     }
 
-    public function getSingular(): ?string
+    public function getSingular(): string
     {
         return $this->singular;
     }
@@ -48,7 +47,7 @@ class Unit
         return $this;
     }
 
-    public function getPlural(): ?string
+    public function getPlural(): string
     {
         return $this->plural;
     }
