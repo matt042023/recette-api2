@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Entity\Traits\HasIdTrait;
-use App\Entity\Traits\HasNameTrait;
 use App\Entity\Traits\HasPriorityTrait;
 use App\Entity\Traits\HasTimeTrait;
 use App\Repository\StepRepository;
@@ -16,11 +15,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: StepRepository::class)]
 #[ApiResource()]
+#[ORM\HasLifecycleCallbacks]
 class Step
 {
     use HasIdTrait;
-
-    use HasNameTrait;
 
     use HasPriorityTrait;
 
