@@ -6,11 +6,11 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Entity\Traits\HasDescriptionTrait;
 use App\Entity\Traits\HasIdTrait;
 use App\Entity\Traits\HasNameTrait;
+use App\Entity\Traits\HasTimeTrait;
 use App\Repository\IngredientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
@@ -23,7 +23,7 @@ class Ingredient
 
     use HasDescriptionTrait;
 
-    use TimestampableEntity;
+    use HasTimeTrait;
 
     #[ORM\Column]
     #[Groups(['Recipe:item:get'])]

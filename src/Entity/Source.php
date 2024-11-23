@@ -7,11 +7,11 @@ use App\Entity\Traits\HasDescriptionTrait;
 use App\Entity\Traits\HasIdTrait;
 use App\Entity\Traits\HasNameTrait;
 use App\Entity\Traits\HasSizeTrait;
+use App\Entity\Traits\HasTimeTrait;
 use App\Repository\SourceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SourceRepository::class)]
@@ -26,7 +26,7 @@ class Source
 
     use HasSizeTrait;
 
-    use TimestampableEntity;
+    use HasTimeTrait;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['Recipe:item:get'])]

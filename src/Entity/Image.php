@@ -12,9 +12,9 @@ use App\Entity\Traits\HasIdTrait;
 use App\Entity\Traits\HasNameTrait;
 use App\Entity\Traits\HasPriorityTrait;
 use App\Entity\Traits\HasSizeTrait;
+use App\Entity\Traits\HasTimeTrait;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -39,7 +39,7 @@ class Image
 
     use HasPriorityTrait;
 
-    use TimestampableEntity;
+    use HasTimeTrait;
 
     use HasSizeTrait;
 
@@ -102,7 +102,7 @@ class Image
         if (null !== $imageFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTime();
+            $this->updatedAt = new \DateTimeImmutable();
         }
     }
 

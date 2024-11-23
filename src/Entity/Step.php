@@ -6,12 +6,12 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Entity\Traits\HasIdTrait;
 use App\Entity\Traits\HasNameTrait;
 use App\Entity\Traits\HasPriorityTrait;
+use App\Entity\Traits\HasTimeTrait;
 use App\Repository\StepRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: StepRepository::class)]
@@ -24,7 +24,7 @@ class Step
 
     use HasPriorityTrait;
 
-    use TimestampableEntity;
+    use HasTimeTrait;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Groups(['Recipe:item:get'])]
