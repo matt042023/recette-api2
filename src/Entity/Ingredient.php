@@ -15,6 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
 #[ApiResource]
+#[ORM\HasLifecycleCallbacks]
 class Ingredient
 {
     use HasIdTrait;

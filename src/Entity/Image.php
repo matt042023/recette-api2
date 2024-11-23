@@ -21,6 +21,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
         new Get(),

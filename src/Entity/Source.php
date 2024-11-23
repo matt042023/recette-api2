@@ -16,6 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SourceRepository::class)]
 #[ApiResource()]
+#[ORM\HasLifecycleCallbacks]
 class Source
 {
     use HasIdTrait;
