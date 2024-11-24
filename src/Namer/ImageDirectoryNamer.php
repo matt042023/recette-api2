@@ -40,7 +40,7 @@ class ImageDirectoryNamer implements DirectoryNamerInterface
 
         // Si l'image est liée à une étape
         if (!is_null($step)) {
-            // L'image sera stockée dans un sous-dossier portant le slug de l'étape
+            // L'image sera stockée dans un sous-dossier portant l'id de l'étape
             $directoryName .= '/'.$step->getId();
         }
 
