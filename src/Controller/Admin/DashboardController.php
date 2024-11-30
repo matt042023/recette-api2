@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -37,6 +38,20 @@ class DashboardController extends AbstractDashboardController
         return Dashboard::new()
             ->setTitle('Recette Api2');
     }
+
+    public function configureCrud(): Crud
+    {
+        $crud = parent::configureCrud();
+
+
+        $crud
+            ->renderContentMaximized()
+            ->showEntityActionsInlined();
+
+
+            return $crud;
+    }
+
 
     public function configureMenuItems(): iterable
     {
