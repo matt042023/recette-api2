@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Tag;
+use App\Entity\Unit;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -58,5 +59,6 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Tags', 'fas fa-hashtag', Tag::class);
+        yield MenuItem::linkToCrud('Unités', 'fas fa-balance-scale', Unit::class);
     }
 }
