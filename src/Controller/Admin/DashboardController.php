@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\IngredientGroup;
+use App\Entity\Source;
 use App\Entity\Tag;
 use App\Entity\Unit;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -62,5 +63,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Tags', 'fas fa-hashtag', Tag::class);
         yield MenuItem::linkToCrud('Unités', 'fas fa-balance-scale', Unit::class);
         yield MenuItem::linkToCrud('Groupes d\'ingrédients', 'fas fa-layer-group', IngredientGroup::class);
+        yield MenuItem::linkToCrud('Sources', 'fa fa-lightbulb', Source::class);
     }
 }
