@@ -48,4 +48,15 @@ trait HasTimeTrait
     {
         $this->updatedAt = new \DateTimeImmutable();
     }
+
+    public function isRecent(\DateInterval $interval = null): bool
+    {
+        $interval = $interval ?? new \DateInterval('P30D');
+        return $this->createdAt > (new \DateTimeImmutable())->sub($interval);
+    }
+
+    public function getTimeSinceCreation(): string
+    {
+        return $this->createdAt->diff(new \DateTimeImmutable())->format('%R%a days');
+    }
 }
