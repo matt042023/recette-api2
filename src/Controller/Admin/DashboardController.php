@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Image;
 use App\Entity\Ingredient;
 use App\Entity\IngredientGroup;
 use App\Entity\Source;
@@ -66,5 +67,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Groupes d\'ingrédients', 'fas fa-layer-group', IngredientGroup::class);
         yield MenuItem::linkToCrud('Sources', 'fa fa-lightbulb', Source::class);
         yield MenuItem::linkToCrud('Ingredients', 'fas fa-utensils', Ingredient::class);
+        yield MenuItem::linkToCrud('Images', 'fas fa-images', Image::class);
     }
 }
