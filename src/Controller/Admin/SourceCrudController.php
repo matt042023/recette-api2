@@ -52,7 +52,11 @@ class SourceCrudController extends AbstractCrudController
             AssociationField::new('recipe', 'Recettes associées')
                 ->setHelp('Optionnel : sélectionnez une entité liée si nécessaire')
                 ->setFormTypeOption('by_reference', false)
-                ->hideOnIndex(),
+                ->hideOnIndex()
+                ->formatValue(function ($value, $entity) {
+                    /* @var Tag $entity */
+                    return $entity->getRecipesSummary();
+                }),
         ];
     }
 
