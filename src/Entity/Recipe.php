@@ -332,7 +332,7 @@ class Recipe
     public function getTagsSummary(): string
     {
         $tags = $this->getTags()->map(function ($tag) {
-            return $tag->getId(); // Assurez-vous que la méthode getName() existe dans l'entité Tag
+            return $tag->getName(); // Assurez-vous que la méthode getName() existe dans l'entité Tag
         })->toArray();
 
         return implode(', ', $tags) ?: 'Aucun tag';
