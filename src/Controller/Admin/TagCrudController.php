@@ -57,7 +57,12 @@ class TagCrudController extends AbstractCrudController
 
             AssociationField::new('children', 'Sous-tags')
                 ->setFormTypeOption('by_reference', false)
-                ->hideOnIndex(),
+                ->hideOnIndex()
+                ->setFormTypeOption('by_reference', false)
+                ->formatValue(function ($value, $entity) {
+                    /** @var Tag $entity */
+                    return $entity->getTagsSummary();
+                }),
         ];
     }
 
