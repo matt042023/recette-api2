@@ -112,4 +112,9 @@ class RecipeHasIngredient
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getIngredient()->getName().' ('.$this->getQuantity().$this->getUnit().')';
+    }
 }

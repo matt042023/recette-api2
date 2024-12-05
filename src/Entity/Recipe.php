@@ -300,4 +300,41 @@ class Recipe
     {
         return $this->getName().' ('.$this->getId().')';
     }
+
+    public function getIngredientsSummary(): string
+    {
+        $summary = '';
+        foreach ($this->getRecipeHasIngredients() as $recipeHasIngredient) {
+            $ingredient = $recipeHasIngredient->getIngredient();
+            $quantity = $recipeHasIngredient->getQuantity();
+            $unit = $recipeHasIngredient->getUnit() ? $recipeHasIngredient->getUnit()->getSingular() : '';
+
+            $summary .= sprintf(
+                '%s: %.2f %s<br>',
+                $ingredient ? $ingredient->getName() : 'Ingrédient inconnu',
+                $quantity,
+                $unit
+            );
+        }
+
+        return $summary ?: 'Aucun ingrédient';
+    }
+
+    public function getSourcesSummary(): string
+{
+    $sources = $this->getSources()->map(function ($source) {
+        return $source->getName(); // Assurez-vous que la méthode getName() existe dans l'entité Source
+    })->toArray();
+
+    return implode(', ', $sources) ?: 'Aucune source';
+}
+
+public function getTagsSummary(): string
+{
+    $tags = $this->getTags()->map(function ($tag) {
+        return $tag->getName(); // Assurez-vous que la méthode getName() existe dans l'entité Tag
+    })->toArray();
+
+    return implode(', ', $tags) ?: 'Aucun tag'; 
+}
 }
