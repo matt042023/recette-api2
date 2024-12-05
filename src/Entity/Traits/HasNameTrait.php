@@ -11,19 +11,19 @@ trait HasNameTrait
 {
     #[ORM\Column(length: 128)]
     #[Groups(['Recipe:item:get'])]
-    #[Assert\NotBlank(message: "Le nom ne peut pas être vide")]
+    #[Assert\NotBlank(message: 'Le nom ne peut pas être vide')]
     #[Assert\Length(
-        min: 2, 
-        max: 128, 
-        minMessage: "Le nom doit faire au moins {{ limit }} caractères",
-        maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères"
+        min: 2,
+        max: 128,
+        minMessage: 'Le nom doit faire au moins {{ limit }} caractères',
+        maxMessage: 'Le nom ne peut pas dépasser {{ limit }} caractères'
     )]
     private string $name = '';
 
     #[ORM\Column(length: 128, unique: true)]
     #[Gedmo\Slug(fields: ['name'], unique: true)]
     #[Assert\Regex(
-        pattern: '/^[a-z0-9-]+$/', 
+        pattern: '/^[a-z0-9-]+$/',
         message: "Le slug ne peut contenir que des lettres minuscules, des chiffres et des traits d'union"
     )]
     private string $slug;
@@ -52,13 +52,14 @@ trait HasNameTrait
         return $this;
     }
 
-     // Ajout d'une méthode pour générer manuellement un slug si nécessaire
-     public function generateSlug(): string
-     {
-         $slug = transliterator_transliterate(
-             'Any-Latin; Latin-ASCII; Lower(); [:Punctuation:] Remove; Space_Remove',
-             $this->name
-         );
-         return str_replace(' ', '-', $slug);
-     }
+    // Ajout d'une méthode pour générer manuellement un slug si nécessaire
+    public function generateSlug(): string
+    {
+        $slug = transliterator_transliterate(
+            'Any-Latin; Latin-ASCII; Lower(); [:Punctuation:] Remove; Space_Remove',
+            $this->name
+        );
+
+        return str_replace(' ', '-', $slug);
+    }
 }

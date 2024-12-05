@@ -11,7 +11,7 @@ trait HasIdTrait
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[Groups(['Recipe:item:get'])]
-    private ?int $id  = null;
+    private ?int $id = null;
 
     public function getId(): ?int
     {

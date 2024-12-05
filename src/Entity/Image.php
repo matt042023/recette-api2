@@ -47,7 +47,7 @@ class Image
 
     #[ORM\Column(length: 255)]
     #[Groups(['Recipe:item:get'])]
-    private string $path = "";
+    private string $path = '';
 
     #[ORM\ManyToOne(inversedBy: 'images')]
     #[ORM\JoinColumn(nullable: true)]

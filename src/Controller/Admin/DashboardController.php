@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Image;
 use App\Entity\Ingredient;
 use App\Entity\IngredientGroup;
+use App\Entity\Recipe;
 use App\Entity\Source;
 use App\Entity\Tag;
 use App\Entity\Unit;
@@ -20,7 +21,7 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-        //return parent::index();
+        // return parent::index();
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
         //
@@ -49,15 +50,12 @@ class DashboardController extends AbstractDashboardController
     {
         $crud = parent::configureCrud();
 
-
         $crud
             ->renderContentMaximized()
             ->showEntityActionsInlined();
 
-
-            return $crud;
+        return $crud;
     }
-
 
     public function configureMenuItems(): iterable
     {
@@ -66,7 +64,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Unités', 'fas fa-balance-scale', Unit::class);
         yield MenuItem::linkToCrud('Groupes d\'ingrédients', 'fas fa-layer-group', IngredientGroup::class);
         yield MenuItem::linkToCrud('Sources', 'fa fa-lightbulb', Source::class);
-        yield MenuItem::linkToCrud('Ingredients', 'fas fa-utensils', Ingredient::class);
+        yield MenuItem::linkToCrud('Ingredients', 'fas fa-carrot', Ingredient::class);
         yield MenuItem::linkToCrud('Images', 'fas fa-images', Image::class);
+        yield MenuItem::linkToCrud('Recettes', 'fas fa-utensils', Recipe::class);
     }
 }

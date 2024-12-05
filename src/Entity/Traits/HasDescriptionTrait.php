@@ -12,8 +12,8 @@ trait HasDescriptionTrait
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['Recipe:item:get'])]
     #[Assert\Length(
-        max: 5000, 
-        maxMessage: "La description ne peut pas dépasser {{ limit }} caractères"
+        max: 5000,
+        maxMessage: 'La description ne peut pas dépasser {{ limit }} caractères'
     )]
     private ?string $description = null;
 

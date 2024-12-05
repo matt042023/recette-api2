@@ -10,11 +10,11 @@ trait HasSizeTrait
 {
     #[ORM\Column]
     #[Groups(['Recipe:item:get'])]
-    #[Assert\Positive(message: "La taille doit être un nombre positif")]
+    #[Assert\Positive(message: 'La taille doit être un nombre positif')]
     #[Assert\Range(
         min: 1,
         max: 1000000,
-        notInRangeMessage: "La taille doit être entre {{ min }} et {{ max }}"
+        notInRangeMessage: 'La taille doit être entre {{ min }} et {{ max }}'
     )]
     private int $size = 1; // Valeur par défaut
 

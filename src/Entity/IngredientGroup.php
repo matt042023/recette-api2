@@ -65,6 +65,6 @@ class IngredientGroup
     // Méthode magique pour l'affichage
     public function __toString()
     {
-        return $this->name . ' (Priorité : ' . $this->priority . ')';
+        return $this->name.' (Priorité : '.$this->priority.')';
     }
 }

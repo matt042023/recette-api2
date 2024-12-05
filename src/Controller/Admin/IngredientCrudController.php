@@ -19,7 +19,6 @@ class IngredientCrudController extends AbstractCrudController
         return Ingredient::class;
     }
 
-
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -51,8 +50,7 @@ class IngredientCrudController extends AbstractCrudController
     {
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
-            ->update(Crud::PAGE_INDEX, Action::NEW, 
+            ->update(Crud::PAGE_INDEX, Action::NEW,
                 fn (Action $action) => $action->setIcon('fa fa-plus')->setLabel('Créer un ingrédient'));
     }
-
 }

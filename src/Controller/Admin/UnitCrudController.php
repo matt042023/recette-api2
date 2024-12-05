@@ -3,13 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Unit;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class UnitCrudController extends AbstractCrudController
 {
@@ -32,16 +31,16 @@ class UnitCrudController extends AbstractCrudController
         return [
             IdField::new('id')
                 ->hideOnForm(),
-            
+
             TextField::new('singular', 'Unité (singulier)')
                 ->setRequired(true)
                 ->setHelp('Forme singulière de l\'unité (ex: gramme, cuillère)')
                 ->setMaxLength(50),
-            
+
             TextField::new('plural', 'Unité (pluriel)')
                 ->setRequired(true)
                 ->setHelp('Forme plurielle de l\'unité (ex: grammes, cuillères)')
-                ->setMaxLength(50)
+                ->setMaxLength(50),
         ];
     }
 
@@ -49,15 +48,16 @@ class UnitCrudController extends AbstractCrudController
     {
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
-            ->update(Crud::PAGE_INDEX, Action::NEW, 
+            ->update(Crud::PAGE_INDEX, Action::NEW,
                 fn (Action $action) => $action->setIcon('fa fa-plus')->setLabel('Créer une unité'))
             ->disable(Action::DELETE); // Empêche la suppression directe
     }
 
     // Méthode optionnelle pour ajouter une validation personnalisée
-    public function createEntity(string $entityFqcn)
+    public function createEntity(string $entityFqcn): Unit
     {
         $unit = new Unit();
+
         return $unit;
     }
 }

@@ -133,6 +133,6 @@ class Tag
 
     public function __toString()
     {
-        return $this->getName() . ' (' . $this->getId() . ')';
+        return $this->getName().' ('.$this->getId().')';
     }
 }

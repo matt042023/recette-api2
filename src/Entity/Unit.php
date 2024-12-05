@@ -91,6 +91,6 @@ class Unit
 
     public function __toString()
     {
-        return $this->singular . ' (' . $this->plural . ')';
+        return $this->singular.' ('.$this->plural.')';
     }
 }

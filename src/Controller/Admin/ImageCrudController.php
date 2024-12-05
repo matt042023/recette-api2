@@ -34,5 +34,4 @@ class ImageCrudController extends AbstractCrudController
             AssociationField::new('recipe', 'Recette liée à l\'image'),
         ];
     }
-
 }

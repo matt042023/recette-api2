@@ -1,28 +1,24 @@
 <?php
-namespace App\Field;
 
+namespace App\Field;
 
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FieldTrait;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
-
 final class VichImageField implements FieldInterface
 {
-  use FieldTrait;
+    use FieldTrait;
 
+    public static function new(string $propertyName, ?string $label = 'Image'): self
+    {
+        return (new self())
+        ->setProperty($propertyName)
+        ->setLabel($label)
 
-  public static function new(string $propertyName, ?string $label = 'Image'): self
-  {
-    return (new self())
-    ->setProperty($propertyName)
-    ->setLabel($label)
+        ->setTemplatePath('admin/fields/Vich_image.html.twig')
 
-
-    ->setTemplatePath('admin/fields/Vich_image.html.twig')
-
-
-    ->setFormType(VichImageType::class)
-    ->addCssClass('field-vich-image');
-  }
+        ->setFormType(VichImageType::class)
+        ->addCssClass('field-vich-image');
+    }
 }

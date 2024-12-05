@@ -14,7 +14,7 @@ trait HasPriorityTrait
     #[Assert\Range(
         min: 0,
         max: 100,
-        notInRangeMessage: "La priorité doit être entre {{ min }} et {{ max }}"
+        notInRangeMessage: 'La priorité doit être entre {{ min }} et {{ max }}'
     )]
     private int $priority = 0; // Valeur par défaut
 

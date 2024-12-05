@@ -49,9 +49,10 @@ trait HasTimeTrait
         $this->updatedAt = new \DateTimeImmutable();
     }
 
-    public function isRecent(\DateInterval $interval = null): bool
+    public function isRecent(?\DateInterval $interval = null): bool
     {
         $interval = $interval ?? new \DateInterval('P30D');
+
         return $this->createdAt > (new \DateTimeImmutable())->sub($interval);
     }
 
