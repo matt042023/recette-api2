@@ -307,11 +307,11 @@ class Recipe
         foreach ($this->getRecipeHasIngredients() as $recipeHasIngredient) {
             $ingredient = $recipeHasIngredient->getIngredient();
             $quantity = $recipeHasIngredient->getQuantity();
-            $unit = $recipeHasIngredient->getUnit() ? $recipeHasIngredient->getUnit()->getSingular() : '';
+            $unit = $recipeHasIngredient->getUnit()->getSingular();
 
             $summary .= sprintf(
                 '%s: %.2f %s<br>',
-                $ingredient ? $ingredient->getName() : 'Ingrédient inconnu',
+                $ingredient->getName(),
                 $quantity,
                 $unit
             );
@@ -332,7 +332,7 @@ class Recipe
 public function getTagsSummary(): string
 {
     $tags = $this->getTags()->map(function ($tag) {
-        return $tag->getName(); // Assurez-vous que la méthode getName() existe dans l'entité Tag
+        return $tag->getId(); // Assurez-vous que la méthode getName() existe dans l'entité Tag
     })->toArray();
 
     return implode(', ', $tags) ?: 'Aucun tag'; 
