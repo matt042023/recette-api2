@@ -57,7 +57,7 @@ class RecipeCrudController extends AbstractCrudController
             ->setEntryType(ImageType::class) // Le formulaire pour les nouvelles images
             ->allowDelete()
             ->allowAdd()
-            ->setTemplatePath('admin/fields/Vich_image.html.twig'), // Utilisation du fichier existant
+            ->setTemplatePath('admin/fields/Vich_image_Peview.html.twig'), // Utilisation du fichier existant
 
             DateTimeField::new('updatedAt', 'date de modification')
             ->hideOnForm(),
