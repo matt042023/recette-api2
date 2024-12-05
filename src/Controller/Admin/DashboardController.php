@@ -6,7 +6,9 @@ use App\Entity\Image;
 use App\Entity\Ingredient;
 use App\Entity\IngredientGroup;
 use App\Entity\Recipe;
+use App\Entity\RecipeHasIngredient;
 use App\Entity\Source;
+use App\Entity\Step;
 use App\Entity\Tag;
 use App\Entity\Unit;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -60,12 +62,19 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToCrud('Recettes', 'fas fa-utensils', Recipe::class);
+
+        yield MenuItem::section('Gestion des données');
         yield MenuItem::linkToCrud('Tags', 'fas fa-hashtag', Tag::class);
         yield MenuItem::linkToCrud('Unités', 'fas fa-balance-scale', Unit::class);
-        yield MenuItem::linkToCrud('Groupes d\'ingrédients', 'fas fa-layer-group', IngredientGroup::class);
         yield MenuItem::linkToCrud('Sources', 'fa fa-lightbulb', Source::class);
         yield MenuItem::linkToCrud('Ingredients', 'fas fa-carrot', Ingredient::class);
+
+        yield MenuItem::section('Gestion des Sous données');
+        yield MenuItem::linkToCrud('Etapes', 'fas fa-forward-step', Step::class);
         yield MenuItem::linkToCrud('Images', 'fas fa-images', Image::class);
-        yield MenuItem::linkToCrud('Recettes', 'fas fa-utensils', Recipe::class);
+        yield MenuItem::linkToCrud('Groupes d\'ingrédients', 'fas fa-layer-group', IngredientGroup::class);
+        yield MenuItem::linkToCrud('Ingrédients de recettes', 'fas fa-utensils', RecipeHasIngredient::class);
+        
     }
 }
