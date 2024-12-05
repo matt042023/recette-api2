@@ -75,6 +75,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Images', 'fas fa-images', Image::class);
         yield MenuItem::linkToCrud('Groupes d\'ingrédients', 'fas fa-layer-group', IngredientGroup::class);
         yield MenuItem::linkToCrud('Ingrédients de recettes', 'fas fa-utensils', RecipeHasIngredient::class);
-        
     }
 }

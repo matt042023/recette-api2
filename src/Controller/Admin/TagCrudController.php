@@ -60,7 +60,7 @@ class TagCrudController extends AbstractCrudController
                 ->hideOnIndex()
                 ->setFormTypeOption('by_reference', false)
                 ->formatValue(function ($value, $entity) {
-                    /** @var Tag $entity */
+                    /* @var Tag $entity */
                     return $entity->getTagsSummary();
                 }),
         ];

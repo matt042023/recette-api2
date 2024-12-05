@@ -36,7 +36,7 @@ class RecipeCrudController extends AbstractCrudController
             ->setSearchFields(['name', 'description', 'tags.name'])
             ->setDefaultSort(['createdAt' => 'DESC'])
             // ->showentityActionsInlined()
-            ;
+        ;
     }
 
     public function configureFields(string $pageName): iterable
@@ -67,7 +67,7 @@ class RecipeCrudController extends AbstractCrudController
             AssociationField::new('tags', 'Tags')
             ->setFormTypeOption('by_reference', false)
             ->formatValue(function ($value, $entity) {
-                /** @var Recipe $entity */
+                /* @var Recipe $entity */
                 return $entity->getTagsSummary();
             }),
 
@@ -77,13 +77,12 @@ class RecipeCrudController extends AbstractCrudController
 
             IntegerField::new('preparation', 'temps de preparation'),
 
-
             CollectionField::new('recipeHasIngredients', 'Ingrédients')
                 ->setEntryType(RecipeHasIngredientType::class)
                 ->allowDelete()
                 ->allowAdd()
-                ->formatValue(function($value, $entity) {
-                    /**
+                ->formatValue(function ($value, $entity) {
+                    /*
                      * @var Recipe $entity
                      */
                     return $entity->getIngredientsSummary();
@@ -99,7 +98,7 @@ class RecipeCrudController extends AbstractCrudController
                 ->allowDelete()
                 ->allowAdd()
                 ->formatValue(function ($value, $entity) {
-                    /** @var Recipe $entity */
+                    /* @var Recipe $entity */
                     return $entity->getSourcesSummary();
                 }),
 
@@ -122,7 +121,4 @@ class RecipeCrudController extends AbstractCrudController
 
         return $recipe;
     }
-
-
-
 }
