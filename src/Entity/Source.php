@@ -88,9 +88,9 @@ class Source
     public function getRecipesSummary(): string
     {
         $recipes = $this->getRecipe()->map(function ($recipe) {
-            return $recipe->getName() .' ('.$recipe->getId().')';
+            return $recipe->getName().' ('.$recipe->getId().')';
         })->toArray();
-        
+
         return implode(', <br>', $recipes) ?: 'Aucun Recette';
     }
 }

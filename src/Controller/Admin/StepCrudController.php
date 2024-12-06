@@ -13,7 +13,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class StepCrudController extends AbstractCrudController
 {
@@ -31,14 +30,13 @@ class StepCrudController extends AbstractCrudController
             ->setDefaultSort(['recipe' => 'ASC']);
     }
 
-
     public function configureFields(string $pageName): iterable
     {
         return [
             AssociationField::new('recipe', 'Recette associée')
                 ->setHelp('sélectionnez une recette liée si nécessaire')
                 ->setFormTypeOption('by_reference', false),
-                
+
             IdField::new('id')
                 ->hideOnForm(),
 
@@ -49,13 +47,11 @@ class StepCrudController extends AbstractCrudController
             TextEditorField::new('content', 'Contenu')
             ->setHelp('Description de l\'étape'),
 
-            
-
-                CollectionField::new('images', 'Images')
-                ->setEntryType(ImageType::class) // Le formulaire pour les nouvelles images
-                ->allowDelete()
-                ->allowAdd()
-                ->setTemplatePath('admin/fields/Vich_image_Peview.html.twig'), // Utilisation du fichier existant
+            CollectionField::new('images', 'Images')
+            ->setEntryType(ImageType::class) // Le formulaire pour les nouvelles images
+            ->allowDelete()
+            ->allowAdd()
+            ->setTemplatePath('admin/fields/Vich_image_Peview.html.twig'), // Utilisation du fichier existant
         ];
     }
 
@@ -68,11 +64,10 @@ class StepCrudController extends AbstractCrudController
             });
     }
 
-    public function createEntity(string $entityFqcn)
+    public function createEntity(string $entityFqcn): Step
     {
         $step = new Step();
 
         return $step;
     }
-
 }
