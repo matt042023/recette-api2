@@ -95,6 +95,9 @@ class Recipe
     #[Groups(['Recipe:item:get'])]
     private Collection $recipeHasIngredients;
 
+    #[ORM\ManyToOne(inversedBy: 'recipes')]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->steps = new ArrayCollection();
@@ -336,5 +339,17 @@ class Recipe
         })->toArray();
 
         return implode(', ', $tags) ?: 'Aucun tag';
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }
