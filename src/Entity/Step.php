@@ -35,7 +35,7 @@ class Step
     /**
      * @var Collection<int, Image>
      */
-    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'step')]
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'step', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['Recipe:item:get'])]
     private Collection $images;
 
@@ -96,5 +96,10 @@ class Step
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return 'id : '.$this->id.' - Etape n°'.$this->priority;
     }
 }

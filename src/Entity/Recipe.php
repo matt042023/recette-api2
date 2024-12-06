@@ -18,6 +18,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -32,6 +33,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         new Patch(),
     ],
 )]
+#[Vich\Uploadable]
 class Recipe
 {
     use HasIdTrait;
@@ -61,21 +63,21 @@ class Recipe
     /**
      * @var Collection<int, Step>
      */
-    #[ORM\OneToMany(targetEntity: Step::class, mappedBy: 'recipe', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Step::class, mappedBy: 'recipe', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['Recipe:item:get'])]
     private Collection $steps;
 
     /**
      * @var Collection<int, Image>
      */
-    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'recipe')]
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'recipe', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['Recipe:item:get'])]
     private Collection $images;
 
     /**
      * @var Collection<int, Source>
      */
-    #[ORM\ManyToMany(targetEntity: Source::class, mappedBy: 'recipe')]
+    #[ORM\ManyToMany(targetEntity: Source::class, mappedBy: 'recipe', cascade: ['persist', 'remove'])]
     #[Groups(['Recipe:item:get'])]
     private Collection $sources;
 
@@ -89,7 +91,7 @@ class Recipe
     /**
      * @var Collection<int, RecipeHasIngredient>
      */
-    #[ORM\OneToMany(targetEntity: RecipeHasIngredient::class, mappedBy: 'recipe', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: RecipeHasIngredient::class, mappedBy: 'recipe', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['Recipe:item:get'])]
     private Collection $recipeHasIngredients;
 
@@ -292,5 +294,47 @@ class Recipe
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getName().' ('.$this->getId().')';
+    }
+
+    public function getIngredientsSummary(): string
+    {
+        $summary = '';
+        foreach ($this->getRecipeHasIngredients() as $recipeHasIngredient) {
+            $ingredient = $recipeHasIngredient->getIngredient();
+            $quantity = $recipeHasIngredient->getQuantity();
+            $unit = $recipeHasIngredient->getUnit()->getSingular();
+
+            $summary .= sprintf(
+                '%s: %.2f %s<br>',
+                $ingredient->getName(),
+                $quantity,
+                $unit
+            );
+        }
+
+        return $summary ?: 'Aucun ingrédient';
+    }
+
+    public function getSourcesSummary(): string
+    {
+        $sources = $this->getSources()->map(function ($source) {
+            return $source->getName(); // Assurez-vous que la méthode getName() existe dans l'entité Source
+        })->toArray();
+
+        return implode(', ', $sources) ?: 'Aucune source';
+    }
+
+    public function getTagsSummary(): string
+    {
+        $tags = $this->getTags()->map(function ($tag) {
+            return $tag->getName(); // Assurez-vous que la méthode getName() existe dans l'entité Tag
+        })->toArray();
+
+        return implode(', ', $tags) ?: 'Aucun tag';
     }
 }

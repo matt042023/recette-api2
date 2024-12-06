@@ -20,7 +20,7 @@ class RecipeHasIngredient
 
     #[ORM\Column]
     #[Groups(['Recipe:item:get'])]
-    private bool $isOptional;
+    private bool $isOptional = false;
 
     #[ORM\ManyToOne(inversedBy: 'recipeHasIngredients')]
     #[ORM\JoinColumn(nullable: false)]
@@ -58,7 +58,7 @@ class RecipeHasIngredient
         return $this->isOptional;
     }
 
-    public function setOptional(bool $isOptional): static
+    public function setIsOptional(bool $isOptional): self
     {
         $this->isOptional = $isOptional;
 
@@ -111,5 +111,10 @@ class RecipeHasIngredient
         $this->unit = $unit;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getIngredient()->getName().' ('.$this->getQuantity().$this->getUnit().')';
     }
 }

@@ -130,4 +130,18 @@ class Tag
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getName().' ('.$this->getId().')';
+    }
+
+    public function getTagsSummary(): string
+    {
+        $tags = $this->getChildren()->map(function ($tag) {
+            return $tag->getName().' ('.$tag->getId().')'; // Assurez-vous que la méthode getName() existe dans l'entité Tag
+        })->toArray();
+
+        return implode(', ', $tags) ?: 'Aucun tag';
+    }
 }

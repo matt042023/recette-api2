@@ -19,7 +19,7 @@ class RecipeHasIngredientFixtures extends Fixture implements DependentFixtureInt
 
             // Generating a random quantity
             $recipeHasIngredient->setQuantity($faker->randomFloat(2, 0.1, 10)); // Random quantity between 0.1 and 10
-            $recipeHasIngredient->setOptional($faker->boolean(30)); // 30% chance of being optional
+            $recipeHasIngredient->setIsOptional($faker->boolean(30)); // 30% chance of being optional
 
             // Setting relations
             $recipe = $this->getReference('recipe_'.$faker->numberBetween(1, 19));

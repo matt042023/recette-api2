@@ -30,6 +30,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
         new Post(),
     ],
 )]
+#[Vich\Uploadable]
 class Image
 {
     use HasIdTrait;
@@ -46,7 +47,7 @@ class Image
 
     #[ORM\Column(length: 255)]
     #[Groups(['Recipe:item:get'])]
-    private string $path;
+    private string $path = '';
 
     #[ORM\ManyToOne(inversedBy: 'images')]
     #[ORM\JoinColumn(nullable: true)]
@@ -110,5 +111,10 @@ class Image
     public function getImageFile(): ?File
     {
         return $this->imageFile;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }
