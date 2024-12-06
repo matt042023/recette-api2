@@ -23,4 +23,3 @@ phpstan.neon
 
 #Images
 App/public/images/*
-App/public/images/.gitignore
