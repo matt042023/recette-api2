@@ -95,7 +95,7 @@ class Recipe
     #[Groups(['Recipe:item:get'])]
     private Collection $recipeHasIngredients;
 
-    #[ORM\ManyToOne(inversedBy: 'recipes')]
+    #[ORM\ManyToOne(inversedBy: 'recipes', cascade: ['persist', 'remove'])]
     private ?User $user = null;
 
     public function __construct()
