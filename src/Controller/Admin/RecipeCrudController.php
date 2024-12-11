@@ -42,6 +42,10 @@ class RecipeCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            
+            AssociationField::new('user', 'Utilisateur')
+                ->setFormTypeOption('disabled', true)
+                ->hideOnIndex(),
             BooleanField::new('draft', 'Brouillon'),
 
             // IdField::new('id')
